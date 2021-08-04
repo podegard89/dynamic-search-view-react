@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import CountButton from './CountButton/CountButton';
 import SearchBar from './SearchBar/SearchBar';
 
 const getProducts = async () => {
@@ -10,31 +9,19 @@ const getProducts = async () => {
 
 const App = () => {
 
-    const [productsState, setProductsState] = useState([])
+    const [productsState, setProductsState] = useState([]);
 
-    // useEffect(() => {
-    //     fetch('https://fakestoreapi.com/products')
-    //         .then((res) => res.json())
-    //         .then((json) => {
-    //             const newProductsState = json.map((product) => {
-    //                 return product.title;
-    //             })
-    //             setProductsState(newProductsState)
-    //         })
-    // }, [])
-
-    useEffect(() => {
-        getProducts().then((jsonArray) => {
-            let newProductsState = jsonArray.map((product) => {
-                return product.title;
-            })
-            setProductsState(newProductsState)
+    useEffect(async () => {
+        let fetchedProducts = await getProducts();
+        let newProductsState = fetchedProducts.map((product) => {
+            return product.title;
         })
+        setProductsState(newProductsState);
     }, [])
 
-    const areProductsLoaded = productsState.length > 0
+    const areProductsLoaded = productsState.length > 0;
 
-    const loadingLogo = <img alt="React Loading logo" src="images/reactLoading.gif"></img>
+    const loadingLogo = <img alt="React Loading logo" src="images/reactLoading.gif"></img>;
 
     return (
         <div>
